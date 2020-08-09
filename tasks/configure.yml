@@ -1,0 +1,50 @@
+---
+# configure tasks file for ansible-role-tomcat
+
+- name: "Configure : Set verions specific switches"
+  set_fact:
+    tomcat_template_server: "tomcat-server-{{ tomcat_major_version }}.xml.j2"
+    tomcat_template_users: "tomcat-users-{{ tomcat_major_version }}.xml.j2"
+
+- name: "Configure : Build server.xml"
+  template:
+    src: "{{ tomcat_template_server }}"
+    dest: "{{ tomcat_path }}/conf/server.xml"
+  notify: restart tomcat
+
+- name: "Configure : Set user roles"
+  set_fact:
+    tomcat_user_roles: "{{ (tomcat_user_roles + item.roles.split(',')|list)|unique }}"
+  with_items:
+    - "{{ tomcat_users }}"
+
+- name: "Configure : Build tomcat-users.xml"
+  template:
+    src: "{{ tomcat_template_users }}"
+    dest: "{{ tomcat_path }}/conf/tomcat-users.xml"
+  notify: restart tomcat
+
+- name: "Configure : Configure access to Manager app"
+  template:
+    src: "{{ tomcat_template_manager_context }}"
+    dest: "{{ tomcat_path }}/webapps/manager/META-INF/context.xml"
+  notify: restart tomcat
+
+- name: "Configure : Configure access to Host Manager app"
+  template:
+    src: "{{ tomcat_template_host_manager_context }}"
+    dest: "{{ tomcat_path }}/webapps/host-manager/META-INF/context.xml"
+  notify: restart tomcat
+
+- name: "Configure : Install service"
+  template:
+    src: "{{ tomcat_template_systemd_service }}"
+    dest: /usr/lib/systemd/system/{{ tomcat_service_name }}.service
+  notify: restart tomcat
+  when: tomcat_service_enabled
+
+- name: "Configure : Enable tomcat service on startup"
+  systemd:
+    name: "{{ tomcat_service_name }}"
+    enabled: "{% if tomcat_service_enabled %}yes{% else %}no{% endif %}"
+  when: tomcat_service_enabled

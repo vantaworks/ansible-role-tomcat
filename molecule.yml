@@ -1,0 +1,18 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: molecule/default/requirements.yml
+driver:
+  name: docker
+platforms:
+  # https://hub.docker.com/u/pycontribs
+  - name: instance
+    image: docker.io/pycontribs/centos:8
+    exposed_ports:
+      - 8080/tcp
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

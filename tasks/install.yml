@@ -1,0 +1,92 @@
+---
+# install tasks file for ansible-role-tomcat
+
+- name: "Install : Create Tomcat user group"
+  group:
+    name: "{{ tomcat_group }}"
+    gid: "{{ tomcat_group_gid | default(omit) }}"
+    state: present
+
+- name: "Install : Create Tomcat user"
+  user:
+    name: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    uid: "{{ tomcat_user_uid | default(omit) }}"
+    state: present
+
+- name: "Install : Check if tomcat is already installed"
+  stat:
+    path: "{{ tomcat_install_path }}"
+  register: is_installed_any
+
+- name: "Install : Create Tomcat install directory"
+  file:
+    path: '{{ tomcat_install_path }}'
+    state: directory
+  changed_when: False
+  when: not is_installed_any.stat.exists
+
+- name: "Install : Set specific install path"
+  set_fact:
+    tomcat_path: "{{ tomcat_install_path }}/tomcat-{{ tomcat_minor_version }}"
+
+- name: "Install : Check if tomcat is already installed"
+  stat:
+    path: "{{ tomcat_path }}"
+  register: is_installed
+
+- name: "Install: Create temporary download directory"
+  file:
+    path: "{{ tomcat_temp_download_path }}"
+    state: directory
+  when: not is_installed.stat.exists
+
+- name: "Install : Download Tomcat"
+  get_url:
+    url: "{{ tomcat_download_url }}/{{ tomcat_minor_version }}.tar.gz"
+    dest: '{{ tomcat_temp_download_path }}'
+    timeout: 120
+  when: not is_installed.stat.exists
+
+- name: "Install : Unarchive Tomcat"
+  unarchive:
+    src: "{{ tomcat_temp_download_path }}/tomcat-{{ tomcat_minor_version }}.tar.gz"
+    dest: "{{ tomcat_install_path }}"
+    remote_src: True
+    owner: "{% if tomcat_permissions_production %}root{% else %}{{ tomcat_user }}{% endif %}"
+    group: "{{ tomcat_group }}"
+    creates: "{{ tomcat_install_path }}/tomcat-{{ tomcat_minor_version }}"
+  register: tomcat_installed
+  when: not is_installed.stat.exists
+
+- name: "Install : Symlink latest version"
+  file:
+    src: "{{ tomcat_path }}"
+    dest: "{{ tomcat_install_path }}/tomcat-latest"
+    state: link
+
+- name: "Install : Clean up temporary files"
+  file:
+    path: '{{ tomcat_temp_download_path }}'
+    state: absent
+  changed_when: False
+  when: not is_installed.stat.exists
+
+- name: "Install : Determine verions to purge"
+  find:
+    path: "{{ tomcat_install_path }}"
+    file_type: directory
+    excludes: 
+      - "tomcat-latest"
+      - "tomcat-{{ tomcat_minor_version }}"
+  when: tomcat_purge_old_versions
+  register: tomcat_purgable_versions
+
+- name: "Install : Purge old versions"
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  when:
+    - tomcat_purge_old_versions
+    - "{{ tomcat_purgable_versions is defined and (tomcat_purgable_versions.files|length > 0) }}"
+  loop: "{{ tomcat_purgable_versions.files }}"

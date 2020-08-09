@@ -1,0 +1,28 @@
+---
+# main tasks file for ansible-role-tomcat
+
+- name: "Main : Version Detection"
+  include: version_detection.yml
+  when:
+    - tomcat_state == "present"
+    - tomcat_minor_version is not defined
+
+- name: "Main : Install Tomcat"
+  include: install.yml
+  when:
+    - tomcat_state == "present"
+
+- name: "Main : Configure Tomcat"
+  include: configure.yml
+  when:
+    - tomcat_state == "present"
+
+- name: "Main : Set Tomcat permissions"
+  include: permissions.yml
+  when:
+    - tomcat_state == "present"
+
+# - name: "Main : Uninstall tomcat"
+#   include: uninstall.yml
+#   when:
+#     - tomcat_state == "absent"

@@ -1,0 +1,21 @@
+---
+# version detection tasks file for ansible-role-tomcat
+
+- name: "Version Detection : Find Available Versions"
+  uri:
+    url: "{{ tomcat_version_url }}"
+    body_format: "json"
+  register: tomcat_versions_raw
+
+- name: "Version Detection : Setting the facts straight"
+  set_fact:
+    tomcat_versions_list: "{{ tomcat_versions_raw.json | map(attribute='name') | list }}"
+    tomcat_versions_filter: "^{{ tomcat_major_version }}.*"
+
+- name: "Version Detection : Filter for applicable major versions"
+  set_fact:
+    tomcat_versions_major_filtered: "{{ tomcat_versions_list | select('match', tomcat_versions_filter) | list }}"
+
+- name: "Version Detection : Select newest version"
+  set_fact:
+    tomcat_minor_version: "{{ tomcat_versions_major_filtered.0 }}"
