@@ -50,6 +50,7 @@ tomcat_user_roles: []
 tomcat_template_manager_context: "manager-context.xml.j2"
 tomcat_template_host_manager_context: "host-manager-context.xml.j2"
 tomcat_template_systemd_service: "tomcat.service.j2"
+tomcat_template_sysvinit_service: "tomcat-sysvinit.j2"
 
 tomcat_uninstall_create_backup: True
 tomcat_uninstall_remove_user: True

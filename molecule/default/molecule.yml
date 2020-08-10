@@ -4,13 +4,18 @@ dependency:
   enabled: True
 driver:
   name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
 platforms:
   # https://hub.docker.com/u/pycontribs
   - name: instance
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"
     published_ports:
       - 0.0.0.0:8080:8080/tcp
-    privileged: true
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    privileged: True
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     pre_build_image: true

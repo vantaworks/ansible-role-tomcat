@@ -35,7 +35,7 @@
     path: "{{ tomcat_path }}"
   register: is_installed
 
-- name: "Install: Create temporary download directory"
+- name: "Install : Create temporary download directory"
   file:
     path: "{{ tomcat_temp_download_path }}"
     state: directory
@@ -76,7 +76,7 @@
   find:
     path: "{{ tomcat_install_path }}"
     file_type: directory
-    excludes: 
+    excludes:
       - "tomcat-latest"
       - "tomcat-{{ tomcat_minor_version }}"
   when: tomcat_purge_old_versions

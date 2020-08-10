@@ -1,6 +1,9 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    tomcat_permissions_production: True
+
   roles:
     - geerlingguy.java
 
