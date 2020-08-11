@@ -6,7 +6,7 @@ driver:
   name: docker
 lint: |
   set -e
-  yamllint .
+  #yamllint .
   ansible-lint
 platforms:
   # https://hub.docker.com/u/pycontribs

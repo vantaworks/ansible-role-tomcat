@@ -28,7 +28,7 @@
 
 - name: "Install : Set specific install path"
   set_fact:
-    tomcat_path: "{{ tomcat_install_path }}/tomcat-{{ tomcat_minor_version }}"
+    tomcat_path: "{{ tomcat_install_path }}/apache-tomcat-{{ tomcat_minor_version }}"
 
 - name: "Install : Check if tomcat is already installed"
   stat:
@@ -43,19 +43,19 @@
 
 - name: "Install : Download Tomcat"
   get_url:
-    url: "{{ tomcat_download_url }}/{{ tomcat_minor_version }}.tar.gz"
+    url: "{{ tomcat_download_url }}/v{{ tomcat_minor_version }}/bin/apache-tomcat-{{ tomcat_minor_version }}.tar.gz"
     dest: '{{ tomcat_temp_download_path }}'
     timeout: 120
   when: not is_installed.stat.exists
 
 - name: "Install : Unarchive Tomcat"
   unarchive:
-    src: "{{ tomcat_temp_download_path }}/tomcat-{{ tomcat_minor_version }}.tar.gz"
+    src: "{{ tomcat_temp_download_path }}/apache-tomcat-{{ tomcat_minor_version }}.tar.gz"
     dest: "{{ tomcat_install_path }}"
     remote_src: True
     owner: "{% if tomcat_permissions_production %}root{% else %}{{ tomcat_user }}{% endif %}"
     group: "{{ tomcat_group }}"
-    creates: "{{ tomcat_install_path }}/tomcat-{{ tomcat_minor_version }}"
+    creates: "{{ tomcat_path }}"
   register: tomcat_installed
   when: not is_installed.stat.exists
 
@@ -78,7 +78,7 @@
     file_type: directory
     excludes:
       - "tomcat-latest"
-      - "tomcat-{{ tomcat_minor_version }}"
+      - "apache-tomcat-{{ tomcat_minor_version }}"
   when: tomcat_purge_old_versions
   register: tomcat_purgable_versions
 

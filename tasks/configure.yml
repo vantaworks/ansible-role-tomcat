@@ -36,22 +36,18 @@
     dest: "{{ tomcat_path }}/webapps/host-manager/META-INF/context.xml"
   notify: restart tomcat
 
-- name: DETECTED INIT SYSTEM
-  debug:
-    msg: "{{ ansible_service_mgr }}"
-
 - name: "Configure : Tomcat Systemd service"
   when:
     - ansible_service_mgr == "systemd"
     - tomcat_service_enabled
   block:
-    - name: "Configure : Install service"
+    - name: "Configure : Install Systemd service"
       template:
         src: "{{ tomcat_template_systemd_service }}"
         dest: /usr/lib/systemd/system/{{ tomcat_service_name }}.service
       notify: restart tomcat
 
-    - name: "Configure : Enable Tomcat service on startup"
+    - name: "Configure : Enable Tomcat Systemd service"
       systemd:
         name: "{{ tomcat_service_name }}"
         enabled: "{% if tomcat_service_enabled %}yes{% else %}no{% endif %}"
@@ -62,13 +58,13 @@
     - ansible_service_mgr == "sysvinit"
     - tomcat_service_enabled
   block:
-    - name: "Configure : Install service"
+    - name: "Configure : Install SysVinit service"
       template:
         src: "{{ tomcat_template_sysvinit_service }}"
         dest: "/etc/init.d/{{ tomcat_service_name }}"
         mode: "0755"
 
-    - name: "Configure : Enable Tomcat service on startup"
+    - name: "Configure : Enable Tomcat SysVinit service"
       service:
         name: "{{ tomcat_service_name }}"
         enabled: "{% if tomcat_service_enabled %}yes{% else %}no{% endif %}"
