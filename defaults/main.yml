@@ -6,7 +6,8 @@ tomcat_state: "present"
 tomcat_major_version: 9
 tomcat_purge_old_versions: True
 
-tomcat_download_url: "http://apache.mirrors.hoobly.com/tomcat/tomcat-{{ tomcat_major_version }}"
+tomcat_mirror: "http://apache.mirrors.hoobly.com"
+tomcat_download_url: "{{ tomcat_mirror }}/tomcat/tomcat-{{ tomcat_major_version }}"
 tomcat_version_url: "https://api.github.com/repos/apache/tomcat/tags?per_page=300"
 tomcat_temp_download_path: /tmp/ansibletomcattempdir
 
@@ -24,16 +25,14 @@ tomcat_service_enabled: True
 tomcat_jvm_percentage_xms: 15
 tomcat_jvm_percentage_xmx: 55
 
-# This bool essentially sets ownership of `tomcat_install_path` to root:root
-tomcat_permissions_production: False
 tomcat_webapps_auto_deployment: True
+tomcat_permissions_production: True
 tomcat_permissions_ensure_on_every_run: True
 
-tomcat_allow_manager_localhost: False
+tomcat_allow_manager_localhost_only: False
 tomcat_allow_host_manager_localhost_only: False
 
 tomcat_debug_mode: False
-
 tomcat_listen_address: 0.0.0.0
 tomcat_port_shutdown: 8005
 tomcat_port_connector: 8080

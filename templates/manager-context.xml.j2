@@ -17,8 +17,8 @@
   limitations under the License.
 -->
 <Context antiResourceLocking="false" privileged="true" >
-  {% if tomcat_allow_manager_localhost == False %}<!--{% else %}{% endif %}<Valve className="org.apache.catalina.valves.RemoteAddrValve"
-         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />{% if tomcat_allow_manager_localhost == False %}-->{% else %}{% endif %}
+  {% if tomcat_allow_manager_localhost_only == False %}<!--{% else %}{% endif %}<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />{% if tomcat_allow_manager_localhost_only == False %}-->{% else %}{% endif %}
 
   <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
 </Context>
