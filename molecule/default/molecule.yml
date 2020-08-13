@@ -9,7 +9,7 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: centos8
+  - name: "${MOLECULE_DISTRO:-instance}"
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     privileged: True
