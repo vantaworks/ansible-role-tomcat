@@ -1,5 +1,7 @@
-Role Name
-=========
+Tomcat Ansible Role
+===================
+
+[![Build Status](https://travis-ci.com/vantaworks/ansible-role-tomcat.svg?branch=master)](https://travis-ci.com/vantaworks/ansible-role-tomcat)
 
 Ansible role to install, configure, and update Apache's Tomcat on Linux. This role tracks the versions tagged in [Tomcat's GitHub repo](https://github.com/apache/tomcat) and then downloads Tomcat from the Apache Foundation mirrors. Those looking for an Ansible role that updates Tomcat every run, then this is for you.
 
