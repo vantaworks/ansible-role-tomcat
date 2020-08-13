@@ -1,6 +1,16 @@
 ---
 # install tasks file for ansible-role-tomcat
 
+- name: "Install : Determine Java Path"
+  command:
+    cmd: "readlink -f /etc/alternatives/java"
+  register: tomcat_java_home_raw
+  changed_when: False
+
+- name: "Install : Set Java Path"
+  set_fact:
+    tomcat_java_home: "{{ tomcat_java_home_raw.stdout | regex_replace('^(.*)/bin/java', '\\1') }}"
+
 - name: "Install : Create Tomcat user group"
   group:
     name: "{{ tomcat_group }}"
@@ -46,6 +56,7 @@
     url: "{{ tomcat_download_url }}/v{{ tomcat_minor_version }}/bin/apache-tomcat-{{ tomcat_minor_version }}.tar.gz"
     dest: '{{ tomcat_temp_download_path }}'
     timeout: 120
+    mode: "0600"
   when: not is_installed.stat.exists
 
 - name: "Install : Unarchive Tomcat"

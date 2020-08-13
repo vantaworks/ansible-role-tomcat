@@ -17,9 +17,6 @@ tomcat_group: tomcat
 # Optional Group ID for Tomcat user group
 # tomcat_group_gid: ""
 
-# Set this according to your Java installation.
-tomcat_java_home: /usr/lib/jvm/jre
-
 tomcat_install_path: /opt/tomcat
 tomcat_service_name: tomcat
 

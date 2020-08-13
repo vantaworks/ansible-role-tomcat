@@ -44,7 +44,8 @@
     - name: "Configure : Install Systemd service"
       template:
         src: "{{ tomcat_template_systemd_service }}"
-        dest: /usr/lib/systemd/system/{{ tomcat_service_name }}.service
+        dest: /etc/systemd/system/{{ tomcat_service_name }}.service
+        mode: "0644"
       notify: restart tomcat
 
     - name: "Configure : Enable Tomcat Systemd service"
