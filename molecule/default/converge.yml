@@ -3,7 +3,7 @@
   hosts: all
 
   pre_tasks:
-    - name: Update apt cache.
+    - name: "Converge : Update apt cache for APT systems"
       apt: update_cache=true cache_valid_time=600
       when: ansible_os_family == 'Debian'
       changed_when: false
@@ -12,6 +12,8 @@
     - geerlingguy.java
 
   tasks:
-    - name: "Include ansible-role-tomcat"
+
+    - name: "Converge : Include ansible-role-tomcat"
       include_role:
         name: "ansible-role-tomcat"
+

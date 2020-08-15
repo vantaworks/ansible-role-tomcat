@@ -3,7 +3,47 @@
 
 - name: Verify
   hosts: all
+  vars:
+
+    tomcat_service_enabled: True
+    tomcat_service_name: tomcat
+    tomcat_port_connector: 8080
+
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+
+    - name: "Verify : Service dependant assertions"
+      when: tomcat_service_enabled
+      block:
+
+        - name: "Verify : Fetch service facts"
+          service_facts:
+          register: services_state
+
+        - name: "Verify : Check if Tomcat service was installed"
+          assert:
+            that:
+              - "'{{ tomcat_service_name }}.service' in services_state.ansible_facts.services"
+            fail_msg: "Tomcat service failed to install"
+            success_msg: "Tomcat service successfully installed"
+
+        - name: "Verify : Select Tomcat service"
+          set_fact:
+            tomcat_service_status: "{{ services_state.ansible_facts.services[tomcat_service_name + '.service'] }}"
+
+        - name: "Verify : Inspect Tomcat status/state"
+          assert:
+            that:
+              - "tomcat_service_status.state == 'running'"
+              - "tomcat_service_status.status == 'enabled'"
+            fail_msg: "Tomcat service failed to start"
+            success_msg: "Tomcat service successfully started"
+
+    - name: "Verify : Port dependant"
+      when: tomcat_service_enabled
+      block:
+
+        - name: "Verify : Wait for tomcat port"
+          wait_for:
+            timeout: 30
+            delay: 3
+            port: "{{ tomcat_port_connector }}"

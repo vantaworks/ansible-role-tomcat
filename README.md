@@ -9,7 +9,7 @@ Requirements
 ------------
 Requires at least Java 8. Below are two viable options:
 
-1. [`geerlingguy.java`](https://galaxy.ansible.com/geerlingguy/java).
+1. [`geerlingguy.java`](https://galaxy.ansible.com/geerlingguy/java)
 2. [`ansiblebit.oracle-java`](https://galaxy.ansible.com/ansiblebit/oracle-java)
 
 Role Variables

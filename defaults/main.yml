@@ -6,7 +6,7 @@ tomcat_state: "present"
 tomcat_major_version: 9
 tomcat_purge_old_versions: True
 
-tomcat_mirror: "http://apache.mirrors.hoobly.com"
+tomcat_mirror: "https://archive.apache.org/dist"
 tomcat_download_url: "{{ tomcat_mirror }}/tomcat/tomcat-{{ tomcat_major_version }}"
 tomcat_version_url: "https://api.github.com/repos/apache/tomcat/tags?per_page=300"
 tomcat_temp_download_path: /tmp/ansibletomcattempdir

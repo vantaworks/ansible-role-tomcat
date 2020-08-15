@@ -10,16 +10,19 @@
         owner: "{{ tomcat_user }}"
         group: "{{ tomcat_group }}"
         recurse: yes
+      notify: restart tomcat
 
     - name: "Permissions : Set directories permissions for non-production installation"
       command: find {{ tomcat_path }} -type d -exec chmod -c 2775 {} \;
       register: find_chmod_result
       changed_when: 'find_chmod_result.stdout | length > 0'
+      notify: restart tomcat
 
     - name: "Permissions : Set files permissions for non-production installation"
       command: find {{ tomcat_path }} -type f -not -name "*.sh" -exec chmod -c 0664 {} \;
       register: find_chmod_result
       changed_when: 'find_chmod_result.stdout | length > 0'
+      notify: restart tomcat
 
 - name: "Permissions : Set non-prod permissions"
   when:
@@ -31,6 +34,7 @@
         path: "{{ tomcat_path }}"
         owner: root
         group: "{{ tomcat_group }}"
+      notify: restart tomcat
 
     - name: "Permissions : Set recursively directories owner/group for production installation"
       file:
@@ -42,6 +46,7 @@
         - bin
         - conf
         - lib
+      notify: restart tomcat
 
     - name: "Permissions : Set recursively directories owner/group for production installation"
       file:
@@ -53,6 +58,7 @@
         - logs
         - temp
         - work
+      notify: restart tomcat
 
     - name: "Permissions : Set recursively webapps directory owner/group for production installation"
       file:
@@ -60,6 +66,7 @@
         owner: "{% if tomcat_webapps_auto_deployment %}{{ tomcat_user }}{% else %}root{% endif %}"
         group: "{{ tomcat_group }}"
         recurse: yes
+      notify: restart tomcat
 
     - name: "Permissions : Set directories permissions for production installation"
       command: find {{ tomcat_path }} -type d -exec chmod -c 2750 {} \;
@@ -70,8 +77,10 @@
       command: find {{ tomcat_path }} -type f -not -name "*.sh" -exec chmod -c 0640 {} \;
       register: find_chmod_result
       changed_when: 'find_chmod_result.stdout | length > 0'
+      notify: restart tomcat
 
     - name: "Permissions : Set files permissions for production installation (2/2)"
       command: find {{ tomcat_path }} -type f -name "*.sh" -exec chmod -c 0750 {} \;
       register: find_chmod_result
       changed_when: 'find_chmod_result.stdout | length > 0'
+      notify: restart tomcat
