@@ -12,6 +12,31 @@ Requires at least Java 8. Below are two viable options:
 1. [`geerlingguy.java`](https://galaxy.ansible.com/geerlingguy/java)
 2. [`ansiblebit.oracle-java`](https://galaxy.ansible.com/ansiblebit/oracle-java)
 
+Install
+-------
+To install directly from GitHub
+
+  - name: tomcat
+    src: http://github.com/idealista/tomcat-role.git
+    scm: git
+    version: master
+
+
+Or, if you want to install from [Ansible Galaxy](https://galaxy.ansible.com/vantaworks/tomcat):
+
+  - name: tomcat
+    src: vantaworks.tomcat
+    version: master
+
+
+Then run the following tocmmand to install.
+
+  ansible-galaxy install -p roles -r requirements.yml -f
+
+
+Further information on [variables](#role-variables) and [example playbooks](#example-playbooks) are shown below.
+
+
 Role Variables
 --------------
 Available variables are listed below, along with default values (see `defaults/main.yml`):
@@ -67,8 +92,8 @@ Dependencies
 ------------
 No Ansible-Python dependencies. See [Requirements](#requirements) above for role requirements.
 
-Example Playbook
-----------------
+Example Playbooks
+-----------------
 ```
 # Install and maintain Tomcat 8 (currently 8.5)
 - name: Example Install Play 1 - Production
