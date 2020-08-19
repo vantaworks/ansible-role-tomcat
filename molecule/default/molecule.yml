@@ -4,11 +4,10 @@ dependency:
   enabled: True
 driver:
   name: docker
-# TODO: Cleanup Linting
-# lint: |
-#   set -e
-#   yamllint .
-#   ansible-lint .
+lint: |
+  set -x
+  yamllint .
+  # ansible-lint .
 platforms:
   - name: "${MOLECULE_DISTRO:-instance}"
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"

@@ -17,7 +17,7 @@ Install
 To install directly from GitHub
 
   - name: tomcat
-    src: http://github.com/idealista/tomcat-role.git
+    src: http://github.com/vantaworks/tomcat.git
     scm: git
     version: master
 

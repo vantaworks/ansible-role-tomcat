@@ -4,7 +4,6 @@
 - name: Verify
   hosts: all
   vars:
-
     tomcat_service_enabled: True
     tomcat_service_name: tomcat
     tomcat_port_connector: 8080
