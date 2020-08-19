@@ -22,7 +22,9 @@
     name: "{{ tomcat_user }}"
     group: "{{ tomcat_group }}"
     uid: "{{ tomcat_user_uid | default(omit) }}"
+    shell: /bin/nologin
     state: present
+    comment: Tomcat Service User
 
 - name: "Install : Check if tomcat is already installed"
   stat:
