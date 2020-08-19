@@ -2,4 +2,4 @@
 language: python
 services: docker
 
-import: vantaworks/build-travis-shared:molecule.yml@main
+import: vantaworks/build-travis-shared:molecule.yml@master
