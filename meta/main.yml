@@ -1,9 +1,10 @@
 galaxy_info:
+  role_name: tomcat
   author: Robert Rice
   description: Ansible role to install, configure, and update Apache's Tomcat on Linux
   company: "Vanta Works"
 
-  # issue_tracker_url: http://example.com/issue/tracker
+  issue_tracker_url: https://github.com/vantaworks/ansible-role-tomcat/issues
 
   license: "license (BSD, MIT)"
 
@@ -23,6 +24,10 @@ galaxy_info:
       versions:
         - all
 
-  galaxy_tags: []
+  galaxy_tags:
+    - java
+    - system
+    - tomcat
+    - web
 
 dependencies: []

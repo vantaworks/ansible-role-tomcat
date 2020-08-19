@@ -14,7 +14,6 @@
     - name: "Verify : Service dependant assertions"
       when: tomcat_service_enabled
       block:
-
         - name: "Verify : Fetch service facts"
           service_facts:
           register: services_state
@@ -41,7 +40,6 @@
     - name: "Verify : Port dependant"
       when: tomcat_service_enabled
       block:
-
         - name: "Verify : Wait for tomcat port"
           wait_for:
             timeout: 30
