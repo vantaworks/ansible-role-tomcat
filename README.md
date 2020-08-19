@@ -15,24 +15,24 @@ Requires at least Java 8. Below are two viable options:
 Install
 -------
 To install directly from GitHub
-
-  - name: tomcat
-    src: http://github.com/vantaworks/tomcat.git
-    scm: git
-    version: master
-
+```
+- name: tomcat
+  src: http://github.com/vantaworks/tomcat.git
+  scm: git
+  version: master
+```
 
 Or, if you want to install from [Ansible Galaxy](https://galaxy.ansible.com/vantaworks/tomcat):
-
-  - name: tomcat
-    src: vantaworks.tomcat
-    version: master
-
+```
+- name: tomcat
+  src: vantaworks.tomcat
+  version: master
+```
 
 Then run the following tocmmand to install.
-
-  ansible-galaxy install -p roles -r requirements.yml -f
-
+```
+ansible-galaxy install -p roles -r requirements.yml -f
+```
 
 Further information on [variables](#role-variables) and [example playbooks](#example-playbooks) are shown below.
 
@@ -43,50 +43,51 @@ Available variables are listed below, along with default values (see `defaults/m
 
 
 The major version to use when installing Tomcat.
-
-	tomcat_major_version: 8
-
+```
+tomcat_major_version: 8
+```
 
 A specific Tomcat minor version to lock to. (Recommendation: leave undefined so role will download latest revision of specified major version).
-
-	tomcat_minor_version: 8.5.57
-	# default is undefined
-
+```
+tomcat_minor_version: 8.5.57
+# default is undefined
+```
 
 Which Apache Foundation mirror to download Tomcat from.
-
-	tomcat_mirror: "http://apache.mirrors.hoobly.com"
-
+```
+tomcat_mirror: "http://apache.mirrors.hoobly.com"
+```
 
 Specify the Tomcat service account parameters, including GID/UID (optional).
+```
+tomcat_user: tomcat
+tomcat_group: tomcat
 
-	tomcat_user: tomcat
-	tomcat_group: tomcat
-
-	tomcat_user_uid: ""
-	tomcat_group_gid: ""
-	# default is undefined
-
+tomcat_user_uid: ""
+tomcat_group_gid: ""
+# default is undefined
+```
 
 Name of the system service.
-
-	tomcat_service_name: "tomcat"
-
+```
+tomcat_service_name: "tomcat"
+```
 
 Whether or not to enable the Tomcat service.
-
-	tomcat_service_enabled: True
-
+```
+tomcat_service_enabled: True
+```
 
 JVM memory allocation percentages.
-
-	tomcat_jvm_percentage_xms: 15
-	tomcat_jvm_percentage_xmx: 55
-
+```
+tomcat_jvm_percentage_xms: 15
+tomcat_jvm_percentage_xmx: 55
+```
 
 Whether or not to enable JMX debugging for Tomcat.
-
-	tomcat_debug_mode: False
+```
+tomcat_debug_mode: False
+```
 
 Dependencies
 ------------
