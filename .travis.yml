@@ -1,2 +1,5 @@
 ---
+language: python
+services: docker
+
 import: vantaworks/build-travis-shared:molecule.yml@main
