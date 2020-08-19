@@ -4,6 +4,7 @@ dependency:
   enabled: True
 driver:
   name: docker
+# TODO: Ansible-lint config to ignore
 lint: |
   set -x
   yamllint .

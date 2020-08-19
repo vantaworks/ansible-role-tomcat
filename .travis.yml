@@ -1,3 +1,2 @@
 ---
 import: vantaworks/build-travis-shared:molecule.yml@main
-
