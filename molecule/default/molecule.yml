@@ -4,10 +4,11 @@ dependency:
   enabled: True
 driver:
   name: docker
-lint: |
-  set -e
-  yamllint .
-  ansible-lint
+# TODO: Cleanup Linting
+# lint: |
+#   set -e
+#   yamllint .
+#   ansible-lint .
 platforms:
   - name: "${MOLECULE_DISTRO:-instance}"
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"
@@ -18,5 +19,6 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
+# TODO: Consider Goss
 verifier:
   name: ansible

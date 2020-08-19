@@ -28,6 +28,7 @@
   template:
     src: "{{ tomcat_template_manager_context }}"
     dest: "{{ tomcat_path }}/webapps/manager/META-INF/context.xml"
+
   notify: restart tomcat
 
 - name: "Configure : Configure access to Host Manager app"
