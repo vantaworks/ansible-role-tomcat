@@ -1,4 +1,2 @@
 exclude_paths:
   - "./.venv/"
-skip_list:
-  - 208

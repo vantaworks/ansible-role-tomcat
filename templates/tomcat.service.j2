@@ -7,14 +7,14 @@ After=syslog.target network.target
 Type=forking
 
 Environment=JAVA_HOME={{ tomcat_java_home }}
-Environment=CATALINA_PID={{ tomcat_path }}/temp/tomcat.pid
-Environment=CATALINA_HOME={{ tomcat_path }}
-Environment=CATALINA_BASE={{ tomcat_path }}
+Environment=CATALINA_PID={{ tomcat_catalina_home }}/temp/tomcat.pid
+Environment=CATALINA_HOME={{ tomcat_catalina_home }}
+Environment=CATALINA_BASE={{ tomcat_catalina_base }}
 Environment='CATALINA_OPTS=-Xms{{ tomcat_jvm_percentage_xms*ansible_memtotal_mb//100 }}M -Xmx{{ tomcat_jvm_percentage_xmx*ansible_memtotal_mb//100 }}M -server -XX:+UseParallelGC {% if tomcat_debug_mode == True %}-Xdebug -Xrunjdwp:transport=dt_socket,address={{ tomcat_port_debug }},server=y,suspend=n{% endif %}'
 Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
 
-ExecStart={{ tomcat_path }}/bin/startup.sh
-ExecStop={{ tomcat_path }}/bin/shutdown.sh
+ExecStart={{ tomcat_catalina_home }}/bin/startup.sh
+ExecStop={{ tomcat_catalina_home }}/bin/shutdown.sh
 
 User={{ tomcat_user }}
 Group={{ tomcat_group }}

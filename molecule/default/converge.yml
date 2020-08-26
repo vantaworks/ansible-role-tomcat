@@ -1,6 +1,12 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    tomcat_permissions_production: False
+    tomcat_users:
+      - username: "tomcat"
+        password: "t3mpp@ssw0rd"
+        roles: "tomcat,admin,manager,manager-gui"
 
   pre_tasks:
     - name: "Converge : Update apt cache for APT systems"

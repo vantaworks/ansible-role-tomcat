@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- {{ ansible_managed }} -->
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
@@ -44,7 +44,9 @@
   <role rolename="{{ role }}"/>
 {% endfor %}
 {% for user in tomcat_users %}
-  <user username="{{ user.username }}" password="{{ user.password }}" roles="{{ user.roles }}"/>
+  <user username="{{ user.username }}"
+        password="{{ user.password }}"
+        roles="{{ user.roles }}"/>
 {% endfor %}
 
 </tomcat-users>

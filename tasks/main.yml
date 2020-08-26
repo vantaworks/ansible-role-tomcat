@@ -17,11 +17,6 @@
   when:
     - tomcat_state == "present"
 
-- name: "Main : Set Tomcat permissions"
-  include: permissions.yml
-  when:
-    - tomcat_state == "present"
-
 # - name: "Main : Uninstall tomcat"
 #   include: uninstall.yml
 #   when:
