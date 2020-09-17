@@ -5,7 +5,7 @@
   include: version_detection.yml
   when:
     - tomcat_state == "present"
-    - tomcat_minor_version is not defined
+      #    - tomcat_minor_version is not defined
 
 - name: "Main : Install Tomcat"
   include: install.yml

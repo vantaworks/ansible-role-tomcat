@@ -16,6 +16,19 @@
   set_fact:
     tomcat_versions_major_filtered: "{{ tomcat_versions_list | select('match', tomcat_versions_filter) | list }}"
 
-- name: "Version Detection : Select newest version"
+- name: "Version Detection : Filter newest version"
   set_fact:
-    tomcat_minor_version: "{{ tomcat_versions_major_filtered.0 }}"
+    tomcat_minor_version_detected: "{{ tomcat_versions_major_filtered.0 }}"
+
+- name: "Version Detection : Mirror selection"
+  set_fact:
+    tomcat_mirror: "{{ tomcat_archive_mirror }}"
+  when:
+    - tomcat_minor_version is defined
+    - tomcat_minor_version != tomcat_minor_version_detected
+
+- name: "Version Detection : Declare minor version"
+  set_fact:
+    tomcat_minor_version: "{{ tomcat_minor_version_detected }}"
+  when:
+    - tomcat_minor_version is not defined
